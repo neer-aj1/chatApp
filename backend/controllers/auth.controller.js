@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
+import generateToken from "../utils/generateToken.js";
 
 export const signup = async (req, res) => {
     try {
@@ -23,3 +24,31 @@ export const signup = async (req, res) => {
         res.send(500).json({error: "Internal Server Error"});
     }
 };
+
+export const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const username = email;
+        const user = await User.findOne({ $or: [{ email }, { username }] });
+        if(!user){
+            res.status(400).json({error: "Invalid Credentials"});
+            return;
+        }
+        
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if(!passwordMatch){
+            res.status(400).json({error: "Invalid Credentials"});
+            return;
+        }
+        generateToken(user._id, res);
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            username: user.username
+        })
+    } catch (error) {
+        console.log(`Error while logging in ${error}`);
+        res.send(500).json({error: "Internal Server Error"});
+    }
+}
