@@ -25,3 +25,5 @@ const privateRoute = async (req, res) => {
     res.send(500).json({ error: "Internal Server Error" });
   }
 };
+
+export default privateRoute;
