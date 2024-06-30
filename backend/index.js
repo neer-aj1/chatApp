@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import authRoute from './routes/auth.route.js';
+import messageRoute from './routes/message.route.js';
+import cookieParser from 'cookie-parser';
 
 const connectToMongoDB = async()=>{
     try {
@@ -15,6 +17,7 @@ const connectToMongoDB = async()=>{
 
 dotenv.config();
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 
@@ -23,6 +26,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', authRoute);
+app.use('/api/message', messageRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
