@@ -3,7 +3,6 @@ import User from "../models/user.model.js";
 
 const privateRoute = async (req, res, next) => {
   try {
-    console.log(req);
     const token = req.cookies.jwt;
     if (!token) {
       res.status(401).json({ error: "Unauthorized" });
