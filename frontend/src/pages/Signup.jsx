@@ -40,6 +40,7 @@ const Signup = () => {
       }
       if(res.message){
         toast.success(res.message);
+        navigate("/login");
       }
       console.log(res);
     } catch (error) {
@@ -72,7 +73,7 @@ const Signup = () => {
               autoComplete="off"
             />
             <input
-              type="text"
+              type="email"
               className="block border border-grey-light w-full p-3 rounded mb-4"
               name="email"
               placeholder="Email"
