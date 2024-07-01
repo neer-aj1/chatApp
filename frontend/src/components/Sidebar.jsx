@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Chats from "./Chats";
 
 const Sidebar = () => {
-    const [chats, setChats] = useState([])
+  const [chats, setChats] = useState([]);
   useEffect(() => {
     let isSubscribed = true;
 
@@ -24,7 +24,7 @@ const Sidebar = () => {
 
     // Cleanup function
     return () => {
-        console.log("Cleanup");
+      console.log("Cleanup");
       isSubscribed = false; // Set the flag to false to prevent state updates if component is unmounted
     };
   }, []);
