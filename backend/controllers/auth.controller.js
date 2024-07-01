@@ -7,7 +7,7 @@ export const signup = async (req, res) => {
         const { name, email, password, username, profilePic } = req.body;
         const user = await User.findOne({ $or: [{ email }, { username }] });
         if (user) {
-          return res.status(409).json({ message: "User already exists" });
+          return res.status(409).json({ error: "User already exists" });
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -22,7 +22,7 @@ export const signup = async (req, res) => {
         res.status(201).json({ message: "User created successfully" });
     } catch (error) {
         console.log(`Error while signing up ${error}`);
-        res.send(500).json({error: "Internal Server Error"});
+        res.status(500).json({error: "Internal Server Error"});
     }
 };
 
@@ -51,7 +51,7 @@ export const login = async (req, res) => {
         })
     } catch (error) {
         console.log(`Error while logging in ${error}`);
-        res.send(500).json({error: "Internal Server Error"});
+        res.status(500).json({error: "Internal Server Error"});
     }
 }
 
@@ -61,6 +61,6 @@ export const logout = (req, res) => {
         res.status(200).json({message: "Logged out successfully"});
     } catch (error) {
         console.log(`Error while logging out ${error}`);
-        res.send(500).json({error: "Internal Server Error"});
+        res.status(500).json({error: "Internal Server Error"});
     }
 }
