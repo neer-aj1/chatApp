@@ -28,13 +28,14 @@ const Login = () => {
       });
       const data = await res.json();
       console.log(data);
-      dispatch(login(data));
       if (data.error) {
         throw new Error(data.error);
       }
       if (data.message) {
         toast.success(data.message);
       }
+      dispatch(login(data));
+      navigate('/');
     } catch (error) {
       toast.error(error.message);
       console.log("Error in login", error);
