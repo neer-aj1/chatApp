@@ -2,9 +2,10 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userSlice from "./slices/userSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage  from "redux-persist/lib/storage";
-
+import selectChat  from "./slices/chatSelectSlice";
 const rootReducer = combineReducers({
   user: userSlice,
+  selectChat
 });
 
 const persistConfig = {
