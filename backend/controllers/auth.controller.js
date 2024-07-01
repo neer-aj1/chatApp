@@ -4,7 +4,7 @@ import generateToken from "../utils/generateToken.js";
 
 export const signup = async (req, res) => {
     try {
-        const { name, email, password, username } = req.body;
+        const { name, email, password, username, profilePic } = req.body;
         const user = await User.findOne({ $or: [{ email }, { username }] });
         if (user) {
           return res.status(409).json({ message: "User already exists" });
@@ -16,6 +16,7 @@ export const signup = async (req, res) => {
           email,
           password: hashedPassword,
           username,
+          profilePic
         });
         await newUser.save();
         res.status(201).json({ message: "User created successfully" });
@@ -45,7 +46,8 @@ export const login = async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            username: user.username
+            username: user.username,
+            profilePic: user.profilePic
         })
     } catch (error) {
         console.log(`Error while logging in ${error}`);
