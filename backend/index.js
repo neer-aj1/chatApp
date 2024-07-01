@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import authRoute from './routes/auth.route.js';
 import messageRoute from './routes/message.route.js';
 import cookieParser from 'cookie-parser';
-
+import userRoute from './routes/user.route.js'
 const connectToMongoDB = async()=>{
     try {
         await mongoose.connect(process.env.MONGO_URL);
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoute);
 app.use('/api/message', messageRoute);
-
+app.use('/api/user', userRoute);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     connectToMongoDB();
