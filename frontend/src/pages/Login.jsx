@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/slices/userSlice";
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -16,20 +19,21 @@ const Login = () => {
         email,
         password,
       };
-      const res = await fetch('/api/auth/login',{
-        method: 'POST',
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       console.log(data);
-      if(data.error){
-        throw new Error(data.error)
+      dispatch(login(data));
+      if (data.error) {
+        throw new Error(data.error);
       }
-      if(data.message){
-        toast.success(data.message)
+      if (data.message) {
+        toast.success(data.message);
       }
     } catch (error) {
       toast.error(error.message);
