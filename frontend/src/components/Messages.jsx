@@ -28,7 +28,7 @@ const Messages = () => {
         <h1>LOADING</h1>
       ) : (
         <div className="flex flex-col gap-2">
-          {messages?.map((message) => (
+          {messages ? "No Messages" : messages?.map((message) => (
             <Message key={message._id} message={message} />
           ))}
         </div>
