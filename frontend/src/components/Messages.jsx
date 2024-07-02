@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Message from "./Message";
 import messageListener from "../utils/messageListener";
+import { setMessages } from "../redux/slices/messageSlice";
 
 const Messages = () => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState([]);
   const selectedChat = useSelector((state) => state.selectChat?.selectedChat);
   const selectedChatId = selectedChat?._id;
-  messageListener(messages, setMessages);
+  messageListener();
   useEffect(() => {
     const getMessages = async () => {
       setLoading(true);
@@ -18,26 +20,33 @@ const Messages = () => {
         console.log("Fetched data:", data);
 
         if (Array.isArray(data)) {
-          setMessages(data);
+          dispatch(setMessages(data));
+          // setMessages(data);
         } else if (data && Array.isArray(data.messages)) {
-          setMessages(data.messages);
+          dispatch(setMessages(data.messages));
+          // setMessages(data.messages);
         } else {
-          setMessages([]);
+          dispatch(setMessages([]));
+          // setMessages([]);
         }
         setLoading(false);
       } catch (error) {
         console.log(`Error while getting messages: ${error}`);
         setLoading(false);
-        setMessages([]);
+        dispatch(setMessages([]));
+        // setMessages([]);
       }
     };
 
     if (selectedChatId) {
       getMessages();
     } else {
-      setMessages([]);
+      dispatch(setMessages([]));
+      // setMessages([]);
     }
   }, [selectedChatId]);
+
+  const messages = useSelector((state) => state.messages.messages) || [];
 
   return (
     <div className="bg-pink-400 h-full p-2 flex flex-col overflow-auto">

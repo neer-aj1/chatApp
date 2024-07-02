@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
 import { useSocket } from "../socketContext/SocketContext";
-
-const messageListener = (messages, setMessages) => {
+import { useDispatch, useSelector } from "react-redux";
+import { addMessage } from "../redux/slices/messageSlice";
+const messageListener = () => {
   const { socket } = useSocket();
+  const dispatch = useDispatch();
+  const messages = useSelector((state) => state.messages.messages) || [];
 
   useEffect(() => {
     socket?.on("new-message", (data) => {
-        setMessages([...messages, data]);
-    })
-  }, [socket, messages, setMessages]);
+      dispatch(addMessage(data));
+    });
+  }, [socket, dispatch, messages]);
 };
 
 export default messageListener;
