@@ -6,13 +6,13 @@ import MessageInput from "./MessageInput";
 const MessageContainer = () => {
   return (
     <div className="bg-blue-500 h-full flex flex-col p-5 w-[100%]">
-      <div className="h-[5%]">
+      <div className="flex-none">
         <MessageHeader />
       </div>
-      <div className="h-[90%]">
+      <div className="flex-grow">
         <Messages />
       </div>
-      <div className="h-[5%]">
+      <div className="flex-none">
         <MessageInput />
       </div>
     </div>
