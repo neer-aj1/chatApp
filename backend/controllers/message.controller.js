@@ -7,19 +7,16 @@ export const sendMessage = async (req, res) => {
     const { id } = req.params;
     const senderId = req.user._id;
 
-    // Validate input data
     if (!message || !id || !senderId) {
       return res.status(400).json({ error: "Invalid data" });
     }
 
-    // Create new message
     const newMessage = new Message({
       senderId,
       receiverId: id,
       message,
     });
 
-    // Find or create conversation
     let conversation = await Conversation.findOne({
       members: { $all: [id, senderId] },
     });
@@ -34,7 +31,6 @@ export const sendMessage = async (req, res) => {
     await newMessage.save();
     await conversation.save();
 
-    // Get receiver's socket ID
     const receiverSocketId = getReceiverSocketId(id); // Corrected function name
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("new-message", newMessage);
