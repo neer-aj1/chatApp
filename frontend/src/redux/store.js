@@ -3,9 +3,11 @@ import userSlice from "./slices/userSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage  from "redux-persist/lib/storage";
 import selectChat  from "./slices/chatSelectSlice";
+import messages from "./slices/messageSlice";
 const rootReducer = combineReducers({
   user: userSlice,
-  selectChat
+  selectChat,
+  messages
 });
 
 const persistConfig = {
