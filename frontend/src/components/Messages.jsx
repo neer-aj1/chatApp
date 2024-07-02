@@ -1,16 +1,17 @@
+// Messages.js
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Message from "./Message";
-import messageListener from "../utils/messageListener";
+import useMessageListener from "../utils/messageListener";
 import { setMessages } from "../redux/slices/messageSlice";
 
-const Messages = () => {
+const Messages = ({ messages, state }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  // const [messages, setMessages] = useState([]);
   const selectedChat = useSelector((state) => state.selectChat?.selectedChat);
   const selectedChatId = selectedChat?._id;
-  messageListener();
+  // let messages = useSelector((state) => state.messages.messages) || [];
+  useMessageListener();
   useEffect(() => {
     const getMessages = async () => {
       setLoading(true);
@@ -21,20 +22,16 @@ const Messages = () => {
 
         if (Array.isArray(data)) {
           dispatch(setMessages(data));
-          // setMessages(data);
         } else if (data && Array.isArray(data.messages)) {
           dispatch(setMessages(data.messages));
-          // setMessages(data.messages);
         } else {
           dispatch(setMessages([]));
-          // setMessages([]);
         }
         setLoading(false);
       } catch (error) {
         console.log(`Error while getting messages: ${error}`);
         setLoading(false);
         dispatch(setMessages([]));
-        // setMessages([]);
       }
     };
 
@@ -42,12 +39,9 @@ const Messages = () => {
       getMessages();
     } else {
       dispatch(setMessages([]));
-      // setMessages([]);
     }
-  }, [selectedChatId]);
-
-  const messages = useSelector((state) => state.messages.messages) || [];
-
+  }, [selectedChatId, messages.length]);
+  console.log(messages);
   return (
     <div className="bg-pink-400 h-full p-2 flex flex-col overflow-auto">
       {loading ? (

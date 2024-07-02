@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { IoIosSend } from "react-icons/io";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-const MessageInput = () => {
+import { addMessage } from "../redux/slices/messageSlice";
+
+const MessageInput = ({state, setState}) => {
+  const dispatch = useDispatch();
   const [message, setMessage] = useState("");
   const selectedChatId = useSelector((state) => state.selectChat?.selectedChat?._id || null);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -18,13 +20,12 @@ const MessageInput = () => {
         body: JSON.stringify(sendingData),
       });
       const data = await res.json();
+      // console.log(data);
       if (data.error) {
         throw new Error(data.error);
       }
-      if (data.message) {
-        toast.success(data.message);
-      }
       setMessage("");
+      dispatch(addMessage(data))
     } catch (error) {
       toast.error(`${error.message}`);
       console.log(`Error while sending message: ${error}`);
@@ -42,6 +43,7 @@ const MessageInput = () => {
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5"
           />
           <button
+            onClick={(e) => setState(!state)}
             type="submit"
             class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           > 

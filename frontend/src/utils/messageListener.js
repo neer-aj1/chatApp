@@ -1,17 +1,27 @@
-import React, { useEffect } from "react";
+// messageListener.js
+import { useEffect } from "react";
 import { useSocket } from "../socketContext/SocketContext";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addMessage } from "../redux/slices/messageSlice";
-const messageListener = () => {
+
+const useMessageListener = () => {
   const { socket } = useSocket();
   const dispatch = useDispatch();
-  const messages = useSelector((state) => state.messages.messages) || [];
 
   useEffect(() => {
-    socket?.on("new-message", (data) => {
-      dispatch(addMessage(data));
-    });
-  }, [socket, dispatch, messages]);
+    if (socket) {
+      const handleMessage = (data) => {
+        dispatch(addMessage(data));
+      };
+
+      socket.on("new-message", handleMessage);
+
+      // Clean up the socket listener on unmount
+      return () => {
+        socket.off("new-message", handleMessage);
+      };
+    }
+  }, [socket, dispatch]);
 };
 
-export default messageListener;
+export default useMessageListener;
