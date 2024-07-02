@@ -5,11 +5,11 @@ import MessageInput from "./MessageInput";
 
 const MessageContainer = () => {
   return (
-    <div className="bg-blue-500 h-full flex flex-col p-5 w-[100%]">
+    <div className="bg-blue-500 h-full flex flex-col p-5 w-[100%] overflow-auto">
       <div className="flex-none">
         <MessageHeader />
       </div>
-      <div className="flex-grow">
+      <div className="flex-grow overflow-auto">
         <Messages />
       </div>
       <div className="flex-none">
