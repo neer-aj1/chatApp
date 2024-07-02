@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/slices/userSlice";
+import { selectChat } from "../redux/slices/chatSelectSlice";
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -35,6 +36,7 @@ const Login = () => {
         toast.success(data.message);
       }
       dispatch(login(data));
+      dispatch(selectChat(null))
       navigate('/');
     } catch (error) {
       toast.error(error.message);

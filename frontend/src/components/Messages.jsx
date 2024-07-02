@@ -14,19 +14,15 @@ const Messages = () => {
       try {
         const res = await fetch(`/api/message/${selectedChatId}`);
         const data = await res.json();
-
-        // Log data to check its structure
         console.log("Fetched data:", data);
 
-        // Ensure data is an array
         if (Array.isArray(data)) {
           setMessages(data);
         } else if (data && Array.isArray(data.messages)) {
-          setMessages(data.messages); // Example of nested structure
+          setMessages(data.messages);
         } else {
           setMessages([]);
         }
-
         setLoading(false);
       } catch (error) {
         console.log(`Error while getting messages: ${error}`);

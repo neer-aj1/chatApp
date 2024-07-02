@@ -4,7 +4,7 @@ import { selectChat } from "../redux/slices/chatSelectSlice";
 
 const Chats = ({ chat }) => {
   const dispatch = useDispatch();
-  const selectedChatId = useSelector((state) => state.selectChat?.selectedChat._id);
+  const selectedChatId = useSelector((state) => state.selectChat?.selectedChat?._id || null);
 
   const handleClick = () => {
     dispatch(selectChat(chat));
