@@ -1,24 +1,31 @@
 import Message from "../models/message.model.js";
 import Conversation from "../models/conversation.model.js";
-import { getReveiverSocketId } from "../socket/socket.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 export const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
     const { id } = req.params;
     const senderId = req.user._id;
+
+    // Validate input data
+    if (!message || !id || !senderId) {
+      return res.status(400).json({ error: "Invalid data" });
+    }
+
+    // Create new message
     const newMessage = new Message({
       senderId,
       receiverId: id,
       message,
     });
+
+    // Find or create conversation
     let conversation = await Conversation.findOne({
-      members: {
-        $all: [id, senderId],
-      },
+      members: { $all: [id, senderId] },
     });
 
     if (!conversation) {
-      conversation = await Conversation.create({
+      conversation = new Conversation({
         members: [senderId, id],
       });
     }
@@ -27,18 +34,18 @@ export const sendMessage = async (req, res) => {
     await newMessage.save();
     await conversation.save();
 
-    const receiverSocketId = getReveiverSocketId(id);
+    // Get receiver's socket ID
+    const receiverSocketId = getReceiverSocketId(id); // Corrected function name
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("new-message", newMessage);
     }
 
     res.status(201).json({ message: "Message sent successfully" });
   } catch (error) {
-    console.log(`Error while sending message ${error}`);
+    console.error(`Error while sending message: ${error.message}`, error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
 export const getMessage = async (req, res) => {
   try {
     console.log("EHEHE");

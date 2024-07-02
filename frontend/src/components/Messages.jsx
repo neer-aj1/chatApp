@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Message from "./Message";
+import messageListener from "../utils/messageListener";
 
 const Messages = () => {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const selectedChat = useSelector((state) => state.selectChat?.selectedChat);
   const selectedChatId = selectedChat?._id;
-
+  messageListener(messages, setMessages);
   useEffect(() => {
     const getMessages = async () => {
       setLoading(true);
