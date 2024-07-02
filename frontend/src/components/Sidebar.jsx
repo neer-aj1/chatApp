@@ -29,7 +29,7 @@ const Sidebar = () => {
     };
   }, []);
   return (
-    <div className="bg-lime-200 py-6 overflow-auto px-3 flex flex-col gap-2">
+    <div className="bg-lime-200 py-6 overflow-auto px-3 flex flex-col gap-2 w-[100%]">
       <h4>CHATS</h4>
       {chats.map((chat) => (
         <Chats key={chat._id} chat={chat} />
