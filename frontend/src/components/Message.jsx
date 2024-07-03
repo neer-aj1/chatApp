@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const Message = ({ message }) => {
   const senderId = message.receiverId;
   const loggedInUserId = useSelector((state) => state.user?.user?._id);
   const right = senderId === loggedInUserId;
+  const sendTime = () => {
+    const date = new Date(message.createdAt);
+    if (isNaN(date.getTime())) {
+      console.error("Invalid date object created from timestamp.");
+      return "Invalid time";
+    }
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const formattedTime = `${hours}:${minutes}`;
+    return formattedTime;
+  }
+  const time = sendTime();
   return (
     <div className={`w-full flex ${right ? '' : 'justify-end'}`}>
       <div
@@ -12,6 +24,9 @@ const Message = ({ message }) => {
         style={{ wordBreak: "break-word" }}
       >
         <p className="break-words w-full max-w-full">{message.message}</p>
+        <div className={`flex ${right ? 'justify-start' : 'justify-end'}`}>
+          <p className={`text-[12px] text-gray-600`}>{time}</p>
+        </div>
       </div>
     </div>
   );
