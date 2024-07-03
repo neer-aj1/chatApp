@@ -43,7 +43,7 @@ const Messages = ({ messages, state }) => {
   }, [selectedChatId]);
   console.log(messages);
   return (
-    <div className="bg-pink-400 h-full p-2 flex flex-col overflow-auto">
+    <div className="bg-gray-200 rounded-b-xl h-full p-2 flex flex-col overflow-auto">
       {loading ? (
         <h1>LOADING</h1>
       ) : (

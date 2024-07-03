@@ -7,7 +7,7 @@ const MessageHeader = () => {
   return (
     <>
       {selectedChat ? (
-        <div className="bg-yellow-500 p-2 flex items-center gap-3">
+        <div className="bg-[#56bee7] rounded-t-2xl p-2 flex items-center gap-3">
           <img
             className="h-10 rounded-full"
             src={selectedChat?.profilePic || ""}

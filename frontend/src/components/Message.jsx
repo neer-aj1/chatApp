@@ -6,9 +6,12 @@ const Message = ({ message }) => {
   const loggedInUserId = useSelector((state) => state.user?.user?._id);
   const right = senderId === loggedInUserId;
   return (
-    <div className={`bg-red-500 w-full flex ${right ? '': 'justify-end'}`}>
-      <div className={`bg-blue-500 p-1 w-fit rounded-t-xl ${right? 'rounded-br-xl':'rounded-bl-xl'}`}>
-        <p>{message.message}</p>
+    <div className={`w-full flex ${right ? '' : 'justify-end'}`}>
+      <div
+        className={`bg-white px-5 py-2 rounded-t-xl max-w-xs ${right ? 'rounded-br-xl' : 'rounded-bl-xl'}`}
+        style={{ wordBreak: "break-word" }}
+      >
+        <p className="break-words w-full max-w-full">{message.message}</p>
       </div>
     </div>
   );

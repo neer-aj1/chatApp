@@ -9,7 +9,7 @@ const MessageContainer = () => {
   
   
   return (
-    <div className="bg-blue-500 h-full flex flex-col p-5 w-[100%] overflow-auto">
+    <div className="bg-white rounded-2xl h-full flex flex-col p-5 w-[100%] overflow-auto">
       <div className="flex-none">
         <MessageHeader />
       </div>
