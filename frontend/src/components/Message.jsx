@@ -25,7 +25,7 @@ const Message = ({ message }) => {
       >
         <p className="break-words w-full max-w-full">{message.message}</p>
         <div className={`flex ${right ? 'justify-start' : 'justify-end'}`}>
-          <p className={`text-[12px] text-gray-600`}>{time}</p>
+          <p className={`text-[11px] text-gray-600`}>{time}</p>
         </div>
       </div>
     </div>
