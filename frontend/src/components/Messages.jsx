@@ -40,7 +40,7 @@ const Messages = ({ messages, state }) => {
     } else {
       dispatch(setMessages([]));
     }
-  }, [selectedChatId, messages.length]);
+  }, [selectedChatId]);
   console.log(messages);
   return (
     <div className="bg-pink-400 h-full p-2 flex flex-col overflow-auto">
