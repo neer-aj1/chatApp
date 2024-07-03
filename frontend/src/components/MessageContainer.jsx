@@ -3,23 +3,24 @@ import MessageHeader from "./MessageHeader";
 import Messages from "./Messages";
 import MessageInput from "./MessageInput";
 import { useSelector } from "react-redux";
-
+import SelectChatMessage from "./SelectChatMessage";
 const MessageContainer = () => {
   let messages = useSelector((state) => state.messages.messages) || [];
-  
-  
-  return (
+  const selectedChat = useSelector((state) => state.selectChat?.selectedChat);
+  return selectedChat ? (
     <div className="bg-white rounded-2xl h-full flex flex-col p-5 w-[100%] overflow-auto">
       <div className="flex-none">
         <MessageHeader />
       </div>
       <div className="flex-grow overflow-auto">
-        <Messages messages={messages}/>
+        <Messages messages={messages} />
       </div>
       <div className="flex-none">
-        <MessageInput/>
+        <MessageInput />
       </div>
     </div>
+  ) : (
+    <SelectChatMessage />
   );
 };
 
