@@ -13,6 +13,7 @@ const Home = () => {
           <MessageContainer />
         </div>
       </div>
+      <button className="absolute top-5 right-5 bg-[#56bee7] p-2 rounded-lg text-white">Logout</button>
     </div>
   );
 };
