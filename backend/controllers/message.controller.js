@@ -44,7 +44,6 @@ export const sendMessage = async (req, res) => {
 };
 export const getMessage = async (req, res) => {
   try {
-    console.log("EHEHE");
     const { id } = req.params;
     const senderId = req.user._id;
     const conversation = await Conversation.findOne({
@@ -52,7 +51,6 @@ export const getMessage = async (req, res) => {
         $all: [senderId, id],
       },
     }).populate("messages");
-    console.log(conversation);
     console.log(`Sender: ${senderId} Receiver: ${id}`);
     if (!conversation) {
       return res.status(404).json({ error: "Conversation not found" });
