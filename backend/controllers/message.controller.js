@@ -51,7 +51,6 @@ export const getMessage = async (req, res) => {
         $all: [senderId, id],
       },
     }).populate("messages");
-    console.log(`Sender: ${senderId} Receiver: ${id}`);
     if (!conversation) {
       return res.status(404).json({ error: "Conversation not found" });
     }
