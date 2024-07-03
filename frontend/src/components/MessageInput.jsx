@@ -40,14 +40,14 @@ const MessageInput = () => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Message"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5"
           />
           <button
             type="submit"
-            class="p-2.5 ms-2 text-sm font-medium text-white bg-[#56bee7] rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "
+            className="p-2.5 ms-2 text-sm font-medium text-white bg-[#56bee7] rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "
           > 
           <IoIosSend className="w-5 h-5" />
-            <span class="sr-only">Search</span>
+            <span className="sr-only">Search</span>
           </button>
         </div>
       </form>

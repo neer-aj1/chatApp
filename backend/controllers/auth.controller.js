@@ -42,6 +42,11 @@ export const login = async (req, res) => {
             return;
         }
         generateToken(user._id, res);
+        res.cookie("frontAccess", "tempCookie", {
+            maxAge: 15 * 24 * 60 * 60 * 1000,
+            httpOnly: false,
+            sameSite: "strict",
+          });
         res.status(200).json({
             _id: user._id,
             name: user.name,
@@ -58,6 +63,7 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
     try {
         res.cookie("jwt", "", {maxAge:0});
+        res.cookie("frontAccess", "", {maxAge:0});
         res.status(200).json({message: "Logged out successfully"});
     } catch (error) {
         console.log(`Error while logging out ${error}`);
