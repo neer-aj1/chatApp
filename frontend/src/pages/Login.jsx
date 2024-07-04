@@ -15,11 +15,10 @@ const Login = () => {
       toast.error("Please fill all the fields");
       return;
     }
+  
     try {
-      const payload = {
-        email,
-        password,
-      };
+      const payload = { email, password };
+  
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
@@ -27,22 +26,39 @@ const Login = () => {
         },
         body: JSON.stringify(payload),
       });
-      const data = await res.json();
+  
+      if (!res.ok) {
+        // Handle non-200 HTTP responses
+        const errorText = await res.text();
+        throw new Error(`HTTP Error: ${res.status} - ${errorText}`);
+      }
+  
+      let data;
+      try {
+        data = await res.json();
+      } catch (parseError) {
+        throw new Error("Failed to parse response as JSON");
+      }
+  
       console.log(data);
+  
       if (data.error) {
         throw new Error(data.error);
       }
+  
       if (data.message) {
         toast.success(data.message);
       }
+  
       dispatch(login(data));
-      dispatch(selectChat(null))
+      dispatch(selectChat(null));
       navigate('/');
     } catch (error) {
       toast.error(error.message);
       console.log("Error in login", error);
     }
   };
+  
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">

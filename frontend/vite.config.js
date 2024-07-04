@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      '/api': 'https://chat-app-bice-nu.vercel.app/'
+      '/api': 'https://chat-app-backend-5820.onrender.com'
     }
   }
 })

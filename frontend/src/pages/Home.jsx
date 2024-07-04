@@ -63,10 +63,10 @@ const Home = () => {
       <div className="relative h-[80%] w-[90%] lg:w-[50%] px-5 py-5 bg-gray-300 bg-opacity-50 backdrop-filter backdrop-blur-sm flex flex-col md:flex-row gap-1 p-10 rounded-2xl">
         <div
           className={`${
-            chatView
+            width<576 && chatView
               ? "top-10 rounded-xl absolute w-[70%] h-[90%] bg-white"
               : "hidden"
-          } md:block md:w-[35%]`}
+          } md:block h-full md:w-[35%]`}
         >
           <Sidebar chatView={chatView} setChatView={setChatView}/>
         </div>
