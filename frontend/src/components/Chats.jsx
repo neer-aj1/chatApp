@@ -2,12 +2,13 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectChat } from "../redux/slices/chatSelectSlice";
 
-const Chats = ({ chat }) => {
+const Chats = ({ chat, chatView, setChatView }) => {
   const dispatch = useDispatch();
   const selectedChatId = useSelector((state) => state.selectChat?.selectedChat?._id || null);
 
   const handleClick = () => {
     dispatch(selectChat(chat));
+    setChatView(!chatView)
   };
 
   const isSelected = selectedChatId === chat._id;
