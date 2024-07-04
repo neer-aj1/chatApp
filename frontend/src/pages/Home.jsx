@@ -22,7 +22,7 @@ const Home = () => {
   useEffect(() => {
     const handleResize = () => {
       setWidth(window.innerWidth);
-      if(width > 569){
+      if(width > 300){
         setChatView(false)
       }
     };
