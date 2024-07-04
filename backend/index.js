@@ -7,6 +7,8 @@ import messageRoute from './routes/message.route.js';
 import cookieParser from 'cookie-parser';
 import userRoute from './routes/user.route.js'
 import { app, server } from './socket/socket.js'
+import cors from 'cors';
+
 const connectToMongoDB = async()=>{
     try {
         await mongoose.connect(process.env.MONGO_URL);
@@ -17,6 +19,11 @@ const connectToMongoDB = async()=>{
 }
 
 dotenv.config();
+app.use(cors({
+    origin: '*', // Allow requests from any origin
+    methods: 'GET,POST,PUT,DELETE,OPTIONS', // Allow these HTTP methods
+    allowedHeaders: 'Content-Type,Authorization' // Allow these headers
+  }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
